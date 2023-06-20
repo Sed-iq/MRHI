@@ -9,6 +9,8 @@ const controllers = require("./controllers");
 app.use(cookie(process.env.SECRET));
 app.post("/api/verify", auth.verify); // To check if authenticated
 
+app.post("/api/events", controllers.Events_Getter); // Get all events
+app.post("/api/events/:id", controllers.Event);
 app.post("/api/profile", auth.passive_verify, controllers.Dashboard);
 app.post("/api/signup", auth.signup);
 app.post("/api/signin", auth.signin);

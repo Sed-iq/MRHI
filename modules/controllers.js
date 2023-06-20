@@ -31,14 +31,14 @@ module.exports.Dashboard = (req, res) => {
 };
 module.exports.Create_Event = async (req, res) => {
   try {
-    const { title, type, image, date, tags, duration } = req.body;
-    if (!title || !type || !date || !tags || duration) {
+    const { title, type, date, tags, duration } = req.body;
+    if (!title || !type || !date || !tags || !duration) {
+      console.log(req.body);
       throw "Fill in all fields";
     } else {
       const event = new Event({
         title,
         type,
-        image,
         date,
         creator: req.user,
         tags,
@@ -47,8 +47,10 @@ module.exports.Create_Event = async (req, res) => {
       event
         .save()
         .then((data) => {
-          if (data) res.end();
-          else throw "Error";
+          if (data) {
+            console.log(data);
+            res.json({ body: data._id });
+          } else throw "Error";
         })
         .catch((err) => {
           sendErr(500, res);
@@ -56,9 +58,26 @@ module.exports.Create_Event = async (req, res) => {
     }
   } catch (error) {
     console.log(error);
-    sendErr(error, res);
+    sendErr(500, res);
   }
 };
+
+module.exports.Events_Getter = async (req, res) => {
+  try {
+    Event.find()
+      .then((data) => {
+        if (data) {
+          res.json(data);
+        } else throw data;
+      })
+      .catch((err) => sendErr(404, res));
+  } catch (error) {
+    console.log(error);
+    sendErr(500, res);
+  }
+};
+
+module.exports.Event = async (req, res) => {};
 
 function sendErr(status, res) {
   res.status(status).end();
