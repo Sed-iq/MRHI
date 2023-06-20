@@ -77,7 +77,36 @@ module.exports.Events_Getter = async (req, res) => {
   }
 };
 
-module.exports.Event = async (req, res) => {};
+module.exports.Events = async (req, res) => {
+  try {
+    const seminars = await Event.find({ type: "seminar" });
+    const webinars = await Event.find({ type: "webinar" });
+    res.json({ seminars, webinars });
+  } catch (error) {
+    console.log(error);
+    sendErr(500, res);
+  }
+};
+
+module.exports.Event = async (req, res) => {
+  try {
+    const { id } = req.params;
+    if (id) {
+      Event.findById(id)
+        .then((data) => {
+          if (data) {
+            res.json(data);
+          } else throw "Not Found";
+        })
+        .catch((err) => {
+          sendErr(404, res);
+        });
+    } else throw "No id";
+  } catch (error) {
+    console.log(error);
+    sendErr(500, res);
+  }
+};
 
 function sendErr(status, res) {
   res.status(status).end();

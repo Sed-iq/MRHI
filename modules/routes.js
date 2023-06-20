@@ -10,6 +10,7 @@ app.use(cookie(process.env.SECRET));
 app.post("/api/verify", auth.verify); // To check if authenticated
 
 app.post("/api/events", controllers.Events_Getter); // Get all events
+app.post("/api/events/all", controllers.Events);
 app.post("/api/events/:id", controllers.Event);
 app.post("/api/profile", auth.passive_verify, controllers.Dashboard);
 app.post("/api/signup", auth.signup);
