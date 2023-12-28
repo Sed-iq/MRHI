@@ -25,5 +25,5 @@ mongoose
   )
   .catch((err) => {
     console.log(err);
-    process.exit(3);
+    process.exit(4);
   });
