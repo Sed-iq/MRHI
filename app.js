@@ -6,7 +6,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const app = express();
 dotenv.config();
-
 app.use(
   cors({
     origin: "*",
@@ -26,5 +25,5 @@ mongoose
   )
   .catch((err) => {
     console.log(err);
-    process.exit(24);
+    process.exit(3);
   });
