@@ -31,8 +31,8 @@ module.exports.Dashboard = (req, res) => {
 };
 module.exports.Create_Event = async (req, res) => {
   try {
-    const { title, type, date, tags, duration } = req.body;
-    if (!title || !type || !date || !tags || !duration) {
+    const { title, type, date, tags, duration, description } = req.body;
+    if (!title || !type || !date || !tags || !duration || !description) {
       console.log(req.body);
       throw "Fill in all fields";
     } else {
@@ -43,6 +43,7 @@ module.exports.Create_Event = async (req, res) => {
         creator: req.user,
         tags,
         duration,
+        description,
       });
       event
         .save()
@@ -53,6 +54,7 @@ module.exports.Create_Event = async (req, res) => {
           } else throw "Error";
         })
         .catch((err) => {
+          console.log(err);
           sendErr(500, res);
         });
     }

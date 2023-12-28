@@ -15,6 +15,10 @@ module.exports.Event = mongoose.model(
       image: {
         type: String,
       },
+      description: {
+        type: String,
+        required: true,
+      },
       type: {
         type: String,
         requried: true,
